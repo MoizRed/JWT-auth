@@ -1,15 +1,13 @@
- const express = require("express");
+const express = require("express");
 const mongoose = require("mongoose");
 const dotevn = require("dotenv").config();
 const app = express();
 
 const authroutes = require("./routes/authRoutes");
 
-
-
 // middleware
 app.use(express.static("public"));
-app.use(express.json())
+app.use(express.json());
 
 // view engine
 app.set("view engine", "ejs");
@@ -22,10 +20,17 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
-  .then((result) => app.listen(3000 , console.log(` Connected ! , listening on port http://${process.env.HOST}:${process.env.PORT}`)))
+  .then((result) =>
+    app.listen(
+      3000,
+      console.log(
+        ` Connected ! , listening on port http://${process.env.HOST}:${process.env.PORT}`,
+      ),
+    )
+  )
   .catch((err) => console.log(err));
 
 // routes
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", (req, res) => res.render("smoothies"));
-app.use(authroutes)
+app.use(authroutes);
