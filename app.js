@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const dotevn = require("dotenv").config();
 const app = express();
 
-const authroutes = require("./routes/authRoutes");
+ const authroutes = require("./routes/authRoutes");
 
 // middleware
 app.use(express.static("public"));
@@ -34,3 +34,4 @@ mongoose
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", (req, res) => res.render("smoothies"));
 app.use(authroutes);
+

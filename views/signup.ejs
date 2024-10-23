@@ -1,8 +1,45 @@
 <%- include('partials/header.ejs'); -%>
 
 
-<h1>signup</h1>
+<form>
+<h2>
+
+    Sign Up
+</h2>
+
+<label for="email">Email</label>
+
+<input type="text" name="email" required />
+<div class ="email error"></div>
+
+
+<label for="password">password</label>
+
+<input type="text" name="password" required />
+<div class ="password error "></div>
+
+<button>GO!</button>
+
+
+<script>
+
+    const form = document.querySelector("form");
+    form.addEventListener("submit" , (e) =>{
+
+        e.preventDefault(); // prevents the form from submitting and reloading the page
+
+
+        const email = form.email.value
+        const  password = form.password.value
+
+        console.log(email , password)
+
+    })
+</script>
 
 
 
-<%- include('partials/footer'); -%>
+</form>
+
+
+<%- include('partials/footer'); -%> 
