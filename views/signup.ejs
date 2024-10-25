@@ -15,31 +15,74 @@
 
 <label for="password">password</label>
 
-<input type="text" name="password" required />
-<div class ="password error "></div>
+<input type="password" name="password" required />
+<div class ="password error ">ff</div>
 
 <button>GO!</button>
-
+</form>
 
 <script>
-
+ const emailError = document.querySelector('.email.error')
+ const passwordError = document.querySelector('.password.error')
     const form = document.querySelector("form");
-    form.addEventListener("submit" , (e) =>{
+    form.addEventListener("submit" , async (e) =>{
 
-        e.preventDefault(); // prevents the form from submitting and reloading the page
-
-
+     
+         e.preventDefault(); // preventss the form from submitting and reloading the page 
+        
         const email = form.email.value
         const  password = form.password.value
 
-        console.log(email , password)
+        
+
+        try {
+       const res =  await fetch('/signup' , {
+            method : "POST",
+            body : JSON.stringify({
+              email,password
+            })
+            , headers: { 'Content-Type': 'application/json' }
+
+        })
+
+      const data = await res.json()
+      console.log(data)
+
+
+      if(data.token){
+       location.assign("/") //changes the end point
+       console.log("redirecting to the home page")
+
+      }
+      if(data.errors){
+
+        emailError.textContent = data.errors.email
+        passwordError.textContent = data.errors.password
+        
+      }else{
+
+        emailError.textContent = ""
+        passwordError.textContent = ""
+      }
+
+
+     
+
+    }catch (error){
+
+        console.log(error)
+
+
+    }
+
+
 
     })
 </script>
 
 
 
-</form>
+
 
 
 <%- include('partials/footer'); -%> 

@@ -2,13 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotevn = require("dotenv").config();
 const app = express();
-
- const authroutes = require("./routes/authRoutes");
+const cookieparser = require("cookie-parser")
+const authroutes = require("./routes/authRoutes");
 
 // middleware
 app.use(express.static("public"));
 app.use(express.json());
-
+app.use(cookieparser())
 // view engine
 app.set("view engine", "ejs");
 
@@ -29,9 +29,30 @@ mongoose
     )
   )
   .catch((err) => console.log(err));
-
 // routes
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", (req, res) => res.render("smoothies"));
+
 app.use(authroutes);
 
+
+
+app.get("/set-cookie", (req, res) => {
+
+    res.cookie("newUser" , true)
+    res.send("you got the cookie")
+    
+})
+
+
+app.get("/read-cookie", (req, res) => {
+
+const cookie = req.cookies
+console.log(cookie)
+
+res.send(cookie)
+
+})
+
+
+//COOKIES ARE EASY AS FUCK !
