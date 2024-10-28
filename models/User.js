@@ -48,6 +48,10 @@ userschema.statics.login = async function (email, password) {
   throw Error("incorrect email");
 };
 
+
+
+
+
 const User = mongoose.model("users", userschema);
 
 module.exports = User;

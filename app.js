@@ -2,13 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotevn = require("dotenv").config();
 const app = express();
-const cookieparser = require("cookie-parser")
+const cookieparser = require("cookie-parser");
 const authroutes = require("./routes/authRoutes");
+const { requireAuth } = require("./middleware/authMiddleware");
 
 // middleware
 app.use(express.static("public"));
 app.use(express.json());
-app.use(cookieparser())
+app.use(cookieparser());
 // view engine
 app.set("view engine", "ejs");
 
@@ -31,28 +32,25 @@ mongoose
   .catch((err) => console.log(err));
 // routes
 app.get("/", (req, res) => res.render("home"));
-app.get("/smoothies", (req, res) => res.render("smoothies"));
+app.get("/smoothies", requireAuth, (req, res) => res.render("smoothies"));
 
 app.use(authroutes);
 
-
-
 app.get("/set-cookie", (req, res) => {
-
-    res.cookie("newUser" , true)
-    res.send("you got the cookie")
-    
-})
-
+  res.cookie("newUser", true);
+  res.send("you got the cookie");
+});
 
 app.get("/read-cookie", (req, res) => {
+  const cookie = req.cookies;
+  console.log(cookie);
 
-const cookie = req.cookies
-console.log(cookie)
+  res.send(cookie);
+});
 
-res.send(cookie)
-
-})
-
+app.get("/logout", (req, res) => {
+  res.cookie("jwt", null, { maxAge: 1 });
+  res.redirect("/");
+});
 
 //COOKIES ARE EASY AS FUCK !
