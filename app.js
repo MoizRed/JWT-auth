@@ -4,7 +4,7 @@ const dotevn = require("dotenv").config();
 const app = express();
 const cookieparser = require("cookie-parser");
 const authroutes = require("./routes/authRoutes");
-const { requireAuth } = require("./middleware/authMiddleware");
+const { requireAuth  , checkUser} = require("./middleware/authMiddleware");
 
 // middleware
 app.use(express.static("public"));
@@ -31,6 +31,7 @@ mongoose
   )
   .catch((err) => console.log(err));
 // routes
+app.get("*" , checkUser )
 app.get("/", (req, res) => res.render("home"));
 app.get("/smoothies", requireAuth, (req, res) => res.render("smoothies"));
 

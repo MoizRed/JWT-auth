@@ -5,6 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "@types/dotenv": "^8.2.3",
+    "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.0",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^22.7.7",
